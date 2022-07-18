@@ -7,6 +7,8 @@ import re
 import numpy as np
 import cv2
 
+# Tensorflow
+import tensorflow as tf
 
 # Keras
 from keras.applications.imagenet_utils import preprocess_input, decode_predictions
@@ -21,12 +23,15 @@ from gevent.pywsgi import WSGIServer
 # Define a flask app
 app = Flask(__name__)
 
-# Model saved with Keras model.save()
-MODEL_PATH = 'Detection_Covid_19.h5'
+json_file = open('model.json', 'r')
+loaded_model_json = json_file.read()
+json_file.close()
+model = tf.keras.models.model_from_json(loaded_model_json)
+# load weights into new model
+model.load_weights('model.h5')
 
 # Load your trained model
-model = load_model(MODEL_PATH)
-model._make_predict_function()          # Necessary
+model.make_predict_function()          # Necessary
 print('Model loaded. Start serving...')
 
 # You can also use pretrained model from Keras
@@ -38,10 +43,10 @@ print('Model loaded. Check http://127.0.0.1:5000/')
 
 
 def model_predict(img_path, model):
-    xtest_image = image.load_img(img_path, target_size=(224, 224))
-    xtest_image = image.img_to_array(xtest_image)
+    xtest_image = tf.keras.preprocessing.image.load_img(img_path, target_size=(224, 224))
+    xtest_image = tf.keras.preprocessing.image.img_to_array(xtest_image)
     xtest_image = np.expand_dims(xtest_image, axis = 0)
-    preds = model.predict_classes(xtest_image)
+    preds = model.predict(xtest_image)
     return preds
 
 
@@ -67,9 +72,9 @@ def upload():
         preds = model_predict(file_path, model)
         
         if preds[0][0] == 0:
-            prediction = 'Positive For Covid-19'
+            prediction = 'Positive For Covid'
         else:
-            prediction = 'Negative for Covid-19'
+            prediction = 'Negative for Covid'
         # Process your result for human
         # pred_class = preds.argmax(axis=-1)            # Simple argmax
         # pred_class = decode_predictions(preds, top=1)   # ImageNet Decode

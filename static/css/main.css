@@ -1,11 +1,44 @@
+/* Body */
+body{
+    background: url('../images/bg3.jpg') no-repeat center;
+    background-size: cover;
+    color: White;
+    text-align: center;
+    padding: 40px;
+}
+
+/* Style for From and it's inputs */
+form{
+    width: max-content;
+    margin: 40px auto;
+}
+form input[type="file"] {
+    border: 1px solid white;
+    border-radius: 5px;
+    padding: 5px;
+    background: #0000005c;
+}
+form .upload-label{
+    display: block;
+    width: max-content;
+    font-size: 26px;
+    color: #fff;
+    transition: all .4s;
+    cursor: pointer;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+/* style for the Image */
 .img-preview {
     width: 256px;
     height: 256px;
     position: relative;
-    border: 5px solid #F8F8F8;
+    border: 4px solid #f1f0f0;
+    border-radius: 5px;
     box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.1);
-    margin-top: 1em;
-    margin-bottom: 1em;    
+    margin: 40px auto  
 }
 
 .img-preview>div {
@@ -16,35 +49,35 @@
     background-position: center;
 }
 
-input[type="file"] {
-    display: none;
-}
-
-.upload-label{
-    display: inline-block;
-    padding: 12px 30px;
-    background: #39D2B4;
-    color: #fff;
-    font-size: 1em;
-    transition: all .4s;
-    cursor: pointer;
-}
-
-.upload-label:hover{
-    background: #34495E;
-    color: #39D2B4;
-}
-
+/* Style for the loader*/
 .loader {
-    border: 8px solid #f3f3f3; /* Light grey */
-    border-top: 8px solid #3498db; /* Blue */
+    border: 5px solid #f3f3f3; /* Light grey */
+    border-top: 5px solid #3498db; /* Blue */
     border-radius: 50%;
     width: 50px;
     height: 50px;
     animation: spin 1s linear infinite;
+    margin: 20px auto
 }
 
+/* Animation for the Loader */
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+}
+
+@media screen and (max-width: 520px){
+    body{
+        padding: 25px;
+    }
+    form{
+        width: auto;
+    }
+    form input[type="file"]{
+        width: 100%;
+    }
+    form .upload-label,
+    #result{
+        font-size: 22px;
+    }
 }
