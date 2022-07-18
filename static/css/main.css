@@ -66,6 +66,7 @@ form .upload-label{
     100% { transform: rotate(360deg); }
 }
 
+/* Responsive on Mobile Screen */
 @media screen and (max-width: 520px){
     body{
         padding: 25px;
